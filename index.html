@@ -5,7 +5,12 @@
     <script src="script.js" defer></script>
   </head>
   <body>
+    <h1>Guessing game</h1>
+    <p>Welcome to the guessing game! Try to guess the right number (randomly generated) in the fewest amount of guesses! There are three levels to choose from. Good luck!</p>
     <p id="date"></p>
+
+    <h3>Name:</h3>
+    <input type="text" id="name" placeholder="Enter your name...">
 
     <h3>Level</h3>
     <input type="radio" name="level" id="e" value="3" checked><label for="e">Easy</label>
@@ -19,15 +24,18 @@
     <button id="guessBtn" disabled>Guess</button>
     <button id="giveUp" disabled>Give Up</button>
 
+
+    <hr> 
+
     <h3>Stats</h3>
     <p id="wins">Total wins: 0</p>
     <p id="avgScore">Average Score: </p>
 
     <h3>Leaderboard</h3>
     <ol>
-      <li name="leaderboard">100</li>
-      <li name="leaderboard">100</li>
-      <li name="leaderboard">100</li>
+      <li name="leaderboard">Empty</li>
+      <li name="leaderboard">Empty</li>
+      <li name="leaderboard">Empty</li>
     </ol>
   </body>
 </html>
