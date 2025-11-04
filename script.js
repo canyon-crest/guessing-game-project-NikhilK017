@@ -8,6 +8,7 @@ guess.disabled = true;
 
 playBtn.addEventListener("click", play);
 guessBtn.addEventListener("click", makeGuess);
+giveUpBtn.addEventListener("click", giveUp);
 
 function play() {
     let nameInput = document.getElementById("name");
@@ -25,6 +26,7 @@ function play() {
     score = 0;
     playBtn.disabled = true;
     guessBtn.disabled = false;
+    giveUpBtn.disabled = false;
     guess.disabled = false;
     for(let i=0; i<levelArr.length; i++){
         if(levelArr[i].checked){
@@ -37,18 +39,35 @@ function play() {
     // guess.placeholder = answer;
 }
 
+
 function makeGuess() {
     let userGuess = parseInt(guess.value);
     if(isNaN(userGuess) || userGuess < 1 || userGuess > level){
         msg.textContent = "Please enter a valid number from 1 to " + level + ".";
         return;
     }
+
+
+    let difference = Math.abs(userGuess - answer);
+    let feedback = "";
+
+    if (difference <= level * 0.15) {
+        feedback = " You're hot!";
+    } else if (difference <= level * 0.3) {
+        feedback = " You're warm!";
+    } else {
+        feedback = " You're cold.";
+    }
+
     score++;
+
     if(userGuess < answer){
-        msg.textContent = "You guessed " + userGuess + ". Too low, try again, " + playerName + ".";   
+        msg.textContent = "You guessed " + userGuess + ". Too low, try again, " + playerName + ".";
+        msg.textContent += feedback; 
         guess.value = "";
     } else if(userGuess > answer){
         msg.textContent = "You guessed " + userGuess + ". Too high, try again, " + playerName + ".";
+        msg.textContent += feedback; 
         guess.value = "";
     } else {
         if (score === 1){
@@ -62,9 +81,18 @@ function makeGuess() {
         
     } 
 }
+
+function giveUp() {
+    score = level;
+    msg.textContent = playerName + ", you gave up! The answer was " + answer + ". Your score was " + score + ". Press play to try again.";
+    updateScore();
+    reset();
+}
+
 function reset(){
     playBtn.disabled = false;
     guessBtn.disabled = true;
+    giveUpBtn.disabled = true;
     guess.disabled = true;
     guess.value = "";
     guess.placeholder = "";
@@ -75,7 +103,7 @@ function reset(){
     }
 
 }
-    
+
 function updateScore() {    
     scoreArr.push(score);
     scoreArr.sort((a,b)=> a - b);
