@@ -18,33 +18,50 @@ function play() {
     let rawName = nameInput.value.trim();
 
 
-    if (rawName === "") {
+    if (!rawName) {
         msg.textContent = "Please enter your name to play!";
         return;
     }
 
+    playBtn.disabled = true;
+    nameInput.disabled = true;
+    for (let i = 0; i < levelArr.length; i++) {
+        levelArr[i].disabled = true;
+    }
+
+    let countdown = 3;
+    msg.textContent = `Game starting in ${countdown}...`;
+
+    const countdownInterval = setInterval(() => {
+        countdown--;
+        if (countdown > 0) {
+            msg.textContent = `Game starting in ${countdown}...`;
+        } else {
+            clearInterval(countdownInterval);
+            startGame(rawName);
+        }
+    }, 1000);
+}
+
+function startGame(rawName) {
     startTime = Date.now();
     document.getElementById("timer").textContent = "00:00";
     timerInterval = setInterval(updateTimerDisplay, 10);
 
     rating.textContent = "";
     playerName = rawName.charAt(0).toUpperCase() + rawName.slice(1).toLowerCase();
-    nameInput.value = playerName;
-    nameInput.disabled = true;
+    document.getElementById("name").value = playerName;
 
     score = 0;
 
-    playBtn.disabled = true;
     guessBtn.disabled = false;
-
     giveUpBtn.disabled = false;
     guess.disabled = false;
 
-    for(let i=0; i<levelArr.length; i++){
-        if(levelArr[i].checked){
+    for (let i = 0; i < levelArr.length; i++) {
+        if (levelArr[i].checked) {
             level = Number(levelArr[i].value);
         }
-        levelArr[i].disabled = true;
     }
 
     msg.innerHTML = "Hello, <span class='player-name'>" + playerName + "</span>! Guess a number from 1 to " + level + ".";
