@@ -121,3 +121,13 @@ label {
   color: rgb(243, 179, 1);
   font-weight: bold;
 }
+
+.date {
+  font-weight:bold;
+}
+
+.clock {
+  font-weight:bold;
+  margin-left:3%;
+  font-size: x-large;
+}
