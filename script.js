@@ -114,14 +114,16 @@ function makeGuess() {
         if (score === 1){
             msg.innerHTML = "Correct, <span class='player-name'>" + playerName + "</span>! You got it in " + score + " guess. Press play to try again.";
             rating.textContent = "Your score was PERFECT! Great job.";
+            triggerConfetti();
         }
         else {
             msg.innerHTML = "Correct, <span class='player-name'>" + playerName + "</span>! You got it in " + score + " guesses. Press play to try again.";
 
             z = (score/level * 100)
             z = Math.round(z);
-            if (z >= 75){
+            if (z <= 25){ // Lower percentage is better
                 rating.textContent = "Your score was good. Try to get it perfect!"
+                triggerConfetti();
             }
             else if ( z >= 50){
                 rating.textContent = "Your score as okay. You can do better."
@@ -228,6 +230,29 @@ function time(){
 function updateClock(){
     const now = new Date();
     clock.textContent = now.toLocaleTimeString();
+}
+
+function triggerConfetti() {
+    const duration = 3 * 1000;
+    const animationEnd = Date.now() + duration;
+    const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
+
+    function randomInRange(min, max) {
+        return Math.random() * (max - min) + min;
+    }
+
+    const interval = setInterval(function() {
+        const timeLeft = animationEnd - Date.now();
+
+        if (timeLeft <= 0) {
+            return clearInterval(interval);
+        }
+
+        const particleCount = 100 * (timeLeft / duration);
+
+        confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 } }));
+        confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 } }));
+    }, 250);
 }
 
 
