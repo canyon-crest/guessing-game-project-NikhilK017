@@ -1,6 +1,8 @@
 // global variables
 let level, answer, score, playerName;
 const levelArr = document.getElementsByName("level");
+rating = document.getElementById("rating");
+
 const scoreArr = [];
 Date.textContent  = time();
 guess.disabled = true;
@@ -14,6 +16,9 @@ function play() {
     let nameInput = document.getElementById("name");
     let rawName = nameInput.value.trim();
 
+    rating.textContent = "";
+
+
     if (rawName === "") {
         msg.textContent = "Please enter your name to play!";
         return;
@@ -24,16 +29,20 @@ function play() {
     nameInput.disabled = true;
 
     score = 0;
+
     playBtn.disabled = true;
     guessBtn.disabled = false;
+
     giveUpBtn.disabled = false;
     guess.disabled = false;
+
     for(let i=0; i<levelArr.length; i++){
         if(levelArr[i].checked){
             level = Number(levelArr[i].value);
         }
         levelArr[i].disabled = true;
     }
+
     msg.textContent = "Hello, " + playerName + "! Guess a number from 1 to " + level + ".";
     answer = Math.floor(Math.random() * level) + 1;
     guess.placeholder = answer;
@@ -75,7 +84,7 @@ function makeGuess() {
             rating.textContent = "Your score was PERFECT! Great job.";
         }
         else {
-            msg.textContent = "Correct! You got it in " + score + " guesses. Press play to try again.";
+            msg.textContent = "Correct, " + playerName + "! You got it in " + score + " guesses. Press play to try again.";
 
             z = (score/level * 100)
             z = Math.round(z);
@@ -93,6 +102,7 @@ function makeGuess() {
         reset();
         
     } 
+    
 
 }
 
@@ -110,10 +120,14 @@ function reset(){
     guessBtn.disabled = true;
     giveUpBtn.disabled = true;
     guess.disabled = true;
+
+    
     rating.value = "";
     rating.placeholder = "";
+
     guess.value = "";
     guess.placeholder = "";
+
     document.getElementById("name").disabled = false;
 
     for (let i = 0; i < levelArr.length; i++){
