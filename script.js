@@ -67,6 +67,7 @@ function startGame(rawName) {
     guessBtn.disabled = false;
     giveUpBtn.disabled = false;
     guess.disabled = false;
+    guess.focus();
 
     for (let i = 0; i < levelArr.length; i++) {
         if (levelArr[i].checked) {
@@ -102,18 +103,16 @@ function makeGuess() {
     score++;
 
     if(userGuess < answer){
-        msg.innerHTML = "You guessed " + userGuess + ". Too low, try again, <span class='player-name'>" + playerName + "</span>.";
-        msg.innerHTML += feedback; 
+        msg.innerHTML = "You guessed " + userGuess + ". Too low, try again, <span class='player-name'>" + playerName + "</span>." + feedback;
         guess.value = "";
     } else if(userGuess > answer){
-        msg.innerHTML = "You guessed " + userGuess + ". Too high, try again, <span class='player-name'>" + playerName + "</span>.";
-        msg.innerHTML += feedback; 
+        msg.innerHTML = "You guessed " + userGuess + ". Too high, try again, <span class='player-name'>" + playerName + "</span>." + feedback;
         guess.value = "";
     } else {
         clearInterval (timerInterval);
         if (score === 1){
             msg.innerHTML = "Correct, <span class='player-name'>" + playerName + "</span>! You got it in " + score + " guess. Press play to try again.";
-            rating.textContent = "Your score was PERFECT! Great job.";
+            rating.innerHTML = "Your score was <span class='perfect-score'>PERFECT!</span> Great job.";
             triggerConfetti();
         }
         else {
@@ -121,15 +120,15 @@ function makeGuess() {
 
             z = (score/level * 100)
             z = Math.round(z);
-            if (z <= 25){ // Lower percentage is better
-                rating.textContent = "Your score was good. Try to get it perfect!"
+            if (z <= 25){ 
+                rating.innerHTML = "Your score was <span class='good-score'>good!</span> Try to get it perfect!";
                 triggerConfetti();
             }
             else if ( z >= 50){
-                rating.textContent = "Your score as okay. You can do better."
+                rating.innerHTML = "Your score was <span class='okay-score'>okay</span>. You can do better."
             }
             else {
-                rating.textContent = "Your score was pretty bad. You might need some coaching."
+                rating.innerHTML = "Your score was pretty <span class='bad-score'>bad</span>. You might need some coaching."
             }
 
         }
@@ -233,26 +232,24 @@ function updateClock(){
 }
 
 function triggerConfetti() {
-    const duration = 3 * 1000;
+    const duration = 5 * 1000;
     const animationEnd = Date.now() + duration;
-    const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
-
-    function randomInRange(min, max) {
-        return Math.random() * (max - min) + min;
-    }
 
     const interval = setInterval(function() {
         const timeLeft = animationEnd - Date.now();
-
         if (timeLeft <= 0) {
             return clearInterval(interval);
         }
+        const particleCount = 200 * (timeLeft / duration);
 
-        const particleCount = 100 * (timeLeft / duration);
-
-        confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 } }));
-        confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 } }));
-    }, 250);
+        confetti({
+            startVelocity: 30,
+            spread: 360,
+            ticks: 60,
+            origin: { x: Math.random(), y: Math.random() - 0.2 }, 
+            particleCount: particleCount
+        });
+    }, 200);
 }
 
 

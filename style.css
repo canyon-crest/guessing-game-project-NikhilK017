@@ -91,13 +91,33 @@ label {
 #msg {
     color:#3694e0;
     border: #21252b;
-    border: 1px solid #1c1e22; /* Subtle black border */
+    border: 1px solid #1c1e22;
     border-radius: 5px;
     padding: 8px;
     text-align: center;
 }
 
 .player-name {
-    color: #8a909c; /* Slightly darker color for the name */
+    color: #8a909c; 
     font-weight: bold;
+}
+
+.perfect-score {
+    color: #00ff4c; 
+    font-weight: bold;
+}
+
+.good-score{
+  color: rgb(0, 174, 255);
+  font-weight: bold;
+}
+
+.bad-score {
+  color:rgb(94, 12, 12);
+  font-weight: bold;
+}
+
+.okay-score {
+  color: rgb(243, 179, 1);
+  font-weight: bold;
 }
