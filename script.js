@@ -4,9 +4,14 @@ const levelArr = document.getElementsByName("level");
 rating = document.getElementById("rating");
 
 const scoreArr = [];
+const date = document.getElementById("date");
+const clock = document.getElementById("clock");
+
 gameTimes = [];
-Date.textContent  = time();
+date.textContent  = time();
+setInterval(updateClock, 1000); 
 guess.disabled = true;
+updateClock();
 
 
 playBtn.addEventListener("click", play);
@@ -14,6 +19,10 @@ guessBtn.addEventListener("click", makeGuess);
 giveUpBtn.addEventListener("click", giveUp);
 
 function play() {
+    
+
+
+
     let nameInput = document.getElementById("name");
     let rawName = nameInput.value.trim();
 
@@ -23,6 +32,7 @@ function play() {
         return;
     }
 
+
     playBtn.disabled = true;
     nameInput.disabled = true;
     for (let i = 0; i < levelArr.length; i++) {
@@ -30,12 +40,12 @@ function play() {
     }
 
     let countdown = 3;
-    msg.textContent = `Game starting in ${countdown}...`;
+    msg.textContent = "Game starting in " + countdown + "...";
 
     const countdownInterval = setInterval(() => {
         countdown--;
         if (countdown > 0) {
-            msg.textContent = `Game starting in ${countdown}...`;
+            msg.textContent = "Game starting in " + countdown + "...";
         } else {
             clearInterval(countdownInterval);
             startGame(rawName);
@@ -192,9 +202,36 @@ function updateTimers(end) {
 
 function time(){
     let d = new Date();
-    d = d.getFullYear + "" + d.getTime();
-    return d;
+    let month = d.getMonth() + 1;
+    let monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    let monthName = monthNames[month - 1];
+    let day = d.getDate();
+    let year = d.getFullYear();
+
+    let suffix = ""
+
+    if (day === 1 || day === 21 || day === 31) {
+        suffix = "st";
+    } else if (day === 2 || day === 22) {
+        suffix = "nd";
+    } else if (day === 3 || day === 23) {
+        suffix = "rd";
+    } else {
+        suffix = "th";
+    }
+
+
+    return monthName + " " + day + suffix + ", " + year;
+    
 }
+
+function updateClock(){
+    const now = new Date();
+    clock.textContent = now.toLocaleTimeString();
+}
+
+
+    
 
 function updateTimerDisplay(){
     const elapsedTime = Date.now() - startTime;
