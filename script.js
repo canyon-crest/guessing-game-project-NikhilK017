@@ -1,5 +1,5 @@
 // global variables
-let level, answer, score, playerName, startTime, timerInterval, gameTimes;
+let level, answer, score, playerName, startTime, timerInterval, gameTimes, currentDifficulty;
 const levelArr = document.getElementsByName("level");
 rating = document.getElementById("rating");
 
@@ -17,6 +17,14 @@ updateClock();
 playBtn.addEventListener("click", play);
 guessBtn.addEventListener("click", makeGuess);
 giveUpBtn.addEventListener("click", giveUp);
+guess.addEventListener("keydown", function(event) {
+
+    if (event.key === "Enter") {
+
+        event.preventDefault();
+        makeGuess();
+    }
+});
 
 function play() {
     
@@ -72,6 +80,15 @@ function startGame(rawName) {
     for (let i = 0; i < levelArr.length; i++) {
         if (levelArr[i].checked) {
             level = Number(levelArr[i].value);
+
+            if (level === 3) {
+                currentDifficulty = "Easy";
+            } else if (level === 10) {
+                currentDifficulty = "Medium";
+            } else if (level === 100) {
+                currentDifficulty = "Hard";
+            }
+
         }
     }
 
@@ -173,15 +190,15 @@ function reset(){
 }
 
 function updateScore() {    
-    scoreArr.push(score);
-    scoreArr.sort((a,b)=> a - b);
+    scoreArr.push({ name: playerName, score: score, difficulty: currentDifficulty });
+    scoreArr.sort((a, b) => a.score - b.score);
     let lb = document.getElementsByName("leaderboard");
     wins.textContent = "Wins: " + scoreArr.length;
     let sum = 0;
     for( let i=0; i<scoreArr.length; i++){
-        sum += scoreArr[i];
-        if(i<lb.length){
-            lb[i].textContent = " " + scoreArr[i];
+        sum += scoreArr[i].score;
+        if (i < lb.length) {
+            lb[i].textContent = scoreArr[i].name  + scoreArr[i].score + " (" + scoreArr[i].difficulty + "): ";
         }
     }
     let avg = sum/scoreArr.length;
