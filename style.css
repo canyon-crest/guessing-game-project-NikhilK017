@@ -98,7 +98,7 @@ label {
 }
 
 .player-name {
-    color: #8a909c; 
+    color: #cccccc; 
     font-weight: bold;
 }
 
@@ -128,6 +128,25 @@ label {
 
 .clock {
   font-weight:bold;
-  margin-left:3%;
+  margin-left:2%;
   font-size: x-large;
+}
+
+.video-container {
+  position: relative;
+  padding-bottom: 56.25%;
+  height: 0;
+  overflow: hidden;
+  max-width: 100%;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+  margin-top: 1em;
+}
+
+.video-container iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
 }

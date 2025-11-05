@@ -37,6 +37,7 @@ function play() {
 
     if (!rawName) {
         msg.textContent = "Please enter your name to play!";
+        nameInput.focus();
         return;
     }
 
@@ -99,6 +100,7 @@ function startGame(rawName) {
 
 
 function makeGuess() {
+    guess.focus()
     let userGuess = parseInt(guess.value);
     if(isNaN(userGuess) || userGuess < 1 || userGuess > level){
         msg.textContent = "Please enter a valid number from 1 to " + level + ".";
@@ -128,12 +130,12 @@ function makeGuess() {
     } else {
         clearInterval (timerInterval);
         if (score === 1){
-            msg.innerHTML = "Correct, <span class='player-name'>" + playerName + "</span>! You got it in " + score + " guess. Press play to try again.";
+            msg.innerHTML = "Correct, <span class='player-name'>" + playerName + "</span>! You got it in <u>" + score + "</u> guess. Press play to try again.";
             rating.innerHTML = "Your score was <span class='perfect-score'>PERFECT!</span> Great job.";
             triggerConfetti();
         }
         else {
-            msg.innerHTML = "Correct, <span class='player-name'>" + playerName + "</span>! You got it in " + score + " guesses. Press play to try again.";
+            msg.innerHTML = "Correct, <span class='player-name'>" + playerName + "</span>! You got it in <u>" + score + "</u> guesses. Press play to try again.";
 
             z = (score/level * 100)
             z = Math.round(z);
@@ -160,7 +162,7 @@ function makeGuess() {
 function giveUp() {
     clearInterval(timerInterval)
     score = level;
-    msg.innerHTML = "<span class='player-name'>" + playerName + "</span>, you gave up! The answer was " + answer + ". Your score was " + score + ". Press play to try again.";
+    msg.innerHTML = "<span class='player-name'>" + playerName + "</span>, you gave up! The answer was " + answer + ". Your score was <u>" + score + "</u>. Press play to try again.";
 
     rating.textContent = "Your score was horrible - you gave up!"
     updateTimers(Date.now());
@@ -198,7 +200,7 @@ function updateScore() {
     for( let i=0; i<scoreArr.length; i++){
         sum += scoreArr[i].score;
         if (i < lb.length) {
-            lb[i].textContent = scoreArr[i].name  + scoreArr[i].score + " (" + scoreArr[i].difficulty + "): ";
+            lb[i].textContent = scoreArr[i].name  + scoreArr[i].score + ": (" + scoreArr[i].difficulty + ")";
         }
     }
     let avg = sum/scoreArr.length;
