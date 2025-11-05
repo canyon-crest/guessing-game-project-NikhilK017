@@ -42,6 +42,23 @@ function play() {
     }
 
 
+    let selectedLevel = document.querySelector('input[name="level"]:checked');
+    if (selectedLevel.value === 'random') {
+
+        const otherLevels = Array.from(document.querySelectorAll('input[name="level"]')).filter(el => el.value !== 'random');
+      
+        const randomLevel = otherLevels[Math.floor(Math.random() * otherLevels.length)];
+    
+        randomLevel.checked = true;
+    }
+
+    const finalSelectedLevel = document.querySelector('input[name="level"]:checked');
+    const label = document.querySelector(`label[for="${finalSelectedLevel.id}"]`);
+    if (label) {
+        label.classList.add('current-level');
+    }
+
+
     playBtn.disabled = true;
     nameInput.disabled = true;
     for (let i = 0; i < levelArr.length; i++) {
@@ -81,7 +98,6 @@ function startGame(rawName) {
     for (let i = 0; i < levelArr.length; i++) {
         if (levelArr[i].checked) {
             level = Number(levelArr[i].value);
-
             if (level === 3) {
                 currentDifficulty = "Easy";
             } else if (level === 10) {
@@ -176,6 +192,12 @@ function reset(){
     giveUpBtn.disabled = true;
     guess.disabled = true;
 
+
+    const highlightedLabel = document.querySelector('.current-level');
+    if (highlightedLabel) {
+        highlightedLabel.classList.remove('current-level');
+    }
+
     
     rating.value = "";
     rating.placeholder = "";
@@ -200,7 +222,7 @@ function updateScore() {
     for( let i=0; i<scoreArr.length; i++){
         sum += scoreArr[i].score;
         if (i < lb.length) {
-            lb[i].textContent = scoreArr[i].name  + scoreArr[i].score + ": (" + scoreArr[i].difficulty + ")";
+            lb[i].textContent = scoreArr[i].name  + ": " + scoreArr[i].score + " (" + scoreArr[i].difficulty + ")";
         }
     }
     let avg = sum/scoreArr.length;
