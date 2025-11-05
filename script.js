@@ -1,9 +1,10 @@
 // global variables
-let level, answer, score, playerName;
+let level, answer, score, playerName, startTime, timerInterval, gameTimes;
 const levelArr = document.getElementsByName("level");
 rating = document.getElementById("rating");
 
 const scoreArr = [];
+gameTimes = [];
 Date.textContent  = time();
 guess.disabled = true;
 
@@ -16,14 +17,17 @@ function play() {
     let nameInput = document.getElementById("name");
     let rawName = nameInput.value.trim();
 
-    rating.textContent = "";
-
 
     if (rawName === "") {
         msg.textContent = "Please enter your name to play!";
         return;
     }
 
+    startTime = Date.now();
+    document.getElementById("timer").textContent = "00:00";
+    timerInterval = setInterval(updateTimerDisplay, 10);
+
+    rating.textContent = "";
     playerName = rawName.charAt(0).toUpperCase() + rawName.slice(1).toLowerCase();
     nameInput.value = playerName;
     nameInput.disabled = true;
@@ -43,7 +47,7 @@ function play() {
         levelArr[i].disabled = true;
     }
 
-    msg.textContent = "Hello, " + playerName + "! Guess a number from 1 to " + level + ".";
+    msg.innerHTML = "Hello, <span class='player-name'>" + playerName + "</span>! Guess a number from 1 to " + level + ".";
     answer = Math.floor(Math.random() * level) + 1;
     guess.placeholder = answer;
 }
@@ -71,20 +75,21 @@ function makeGuess() {
     score++;
 
     if(userGuess < answer){
-        msg.textContent = "You guessed " + userGuess + ". Too low, try again, " + playerName + ".";
-        msg.textContent += feedback; 
+        msg.innerHTML = "You guessed " + userGuess + ". Too low, try again, <span class='player-name'>" + playerName + "</span>.";
+        msg.innerHTML += feedback; 
         guess.value = "";
     } else if(userGuess > answer){
-        msg.textContent = "You guessed " + userGuess + ". Too high, try again, " + playerName + ".";
-        msg.textContent += feedback; 
+        msg.innerHTML = "You guessed " + userGuess + ". Too high, try again, <span class='player-name'>" + playerName + "</span>.";
+        msg.innerHTML += feedback; 
         guess.value = "";
     } else {
+        clearInterval (timerInterval);
         if (score === 1){
-            msg.textContent = "Correct, " + playerName + "! You got it in " + score + " guess. Press play to try again.";
+            msg.innerHTML = "Correct, <span class='player-name'>" + playerName + "</span>! You got it in " + score + " guess. Press play to try again.";
             rating.textContent = "Your score was PERFECT! Great job.";
         }
         else {
-            msg.textContent = "Correct, " + playerName + "! You got it in " + score + " guesses. Press play to try again.";
+            msg.innerHTML = "Correct, <span class='player-name'>" + playerName + "</span>! You got it in " + score + " guesses. Press play to try again.";
 
             z = (score/level * 100)
             z = Math.round(z);
@@ -97,20 +102,23 @@ function makeGuess() {
             else {
                 rating.textContent = "Your score was pretty bad. You might need some coaching."
             }
+
         }
+        updateTimers(Date.now());
         updateScore();
         reset();
         
     } 
     
-
 }
 
 function giveUp() {
+    clearInterval(timerInterval)
     score = level;
-    msg.textContent = playerName + ", you gave up! The answer was " + answer + ". Your score was " + score + ". Press play to try again.";
+    msg.innerHTML = "<span class='player-name'>" + playerName + "</span>, you gave up! The answer was " + answer + ". Your score was " + score + ". Press play to try again.";
 
     rating.textContent = "Your score was horrible - you gave up!"
+    updateTimers(Date.now());
     updateScore();
     reset();
 }
@@ -152,8 +160,29 @@ function updateScore() {
     avgScore.textContent = "Average Score: " + avg.toFixed(2);
 
 }
+
+function updateTimers(end) {
+    const dur = end - startTime;
+    gameTimes.push(dur);
+
+    const min = Math.min(...gameTimes);
+    document.getElementById("fastest").textContent = "Fastest Game: " + (min / 1000).toFixed(2) + "s";
+
+    const sum = gameTimes.reduce((total, time) => total + time, 0);
+    const avg = sum / gameTimes.length;
+    document.getElementById("avgTime").textContent = "Average Time: " + (avg / 1000).toFixed(2) + "s";
+}
+
 function time(){
     let d = new Date();
     d = d.getFullYear + "" + d.getTime();
     return d;
+}
+
+function updateTimerDisplay(){
+    const elapsedTime = Date.now() - startTime;
+    const seconds = String(Math.floor(elapsedTime / 1000)).padStart(2, '0');
+    const hundredths = String(Math.floor((elapsedTime % 1000) / 10)).padStart(2, '0');
+
+    document.getElementById("timer").textContent = "Timer: " + seconds + ":" + hundredths;
 }

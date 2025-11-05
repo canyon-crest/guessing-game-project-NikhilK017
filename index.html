@@ -3,9 +3,10 @@
   <head>
     <title>JavaScript Number Guessing Game</title>
     <script src="script.js" defer></script>
+    <link rel="stylesheet" href="style.css">
   </head>
   <body>
-    <h1>Guessing game</h1>
+    <h1>Guessing Game</h1>
     <p>Welcome to the guessing game! Try to guess the right number (randomly generated) in the fewest amount of guesses! There are three levels to choose from. After each guess, you will know if your guess was hot, warm, or cold. Good luck!</p>
     <p id="date"></p>
 
@@ -25,12 +26,16 @@
     <button id="guessBtn" disabled>Guess</button>
     <button id="giveUpBtn" disabled>Give Up</button>
 
+    <p id="timer"></p>
+
 
     <hr> 
 
     <h3>Stats</h3>
     <p id="wins">Total wins: 0</p>
     <p id="avgScore">Average Score: </p>
+    <p id="fastest">Fastest Game: N/A</p>
+    <p id="avgTime">Average Time: N/A</p>
 
     <h3>Leaderboard</h3>
     <ol>
