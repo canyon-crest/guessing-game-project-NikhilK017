@@ -2,7 +2,7 @@
 let level, answer, score, playerName, startTime, timerInterval, gameTimes, currentDifficulty;
 const guess = document.getElementById("guess");
 const levelArr = document.getElementsByName("level");
-rating = document.getElementById("rating");
+const rating = document.getElementById("rating");
 
 const scoreArr = [];
 const date = document.getElementById("date");
@@ -37,8 +37,6 @@ document.getElementById("showHint").addEventListener("change", function() {
 
 function play() {
     
-
-
 
     let nameInput = document.getElementById("name");
     let rawName = nameInput.value.trim();
@@ -121,9 +119,11 @@ function startGame(rawName) {
     msg.innerHTML = "Hello, <span class='player-name'>" + playerName + "</span>! Guess a number from 1 to " + level + ".";
     answer = Math.floor(Math.random() * level) + 1;
 
-    
-}
 
+    if (document.getElementById("showHint").checked) {
+        guess.placeholder = "Answer: " + answer;
+    }
+}
 
 function makeGuess() {
     guess.focus()
@@ -137,7 +137,7 @@ function makeGuess() {
     let difference = Math.abs(userGuess - answer);
     let feedback = "";
 
-    if (difference <= level * 0.15) {
+    if (difference <= level * 0.10) {
         feedback = " You're hot!";
     } else if (difference <= level * 0.3) {
         feedback = " You're warm...";
@@ -165,15 +165,15 @@ function makeGuess() {
 
             z = (score/level * 100)
             z = Math.round(z);
-            if (z <= 25){ 
+            if (z <= 10){ 
                 rating.innerHTML = "Your score was <span class='good-score'>good!</span> Try to get it perfect!";
                 triggerConfetti();
             }
-            else if ( z >= 50){
+            else if ( z <= 25){
                 rating.innerHTML = "Your score was <span class='okay-score'>okay</span>. You can do better."
             }
             else {
-                rating.innerHTML = "Your score was pretty <span class='bad-score'>bad</span>. You might need some coaching."
+                rating.innerHTML = "Your score was pretty <span class='bad-score'>bad</span>. You might need some coaching.";
             }
 
         }
@@ -213,7 +213,7 @@ function reset(){
     rating.placeholder = "";
 
     guess.value = "";
-    document.getElementById("showHint").checked = false;
+    // document.getElementById("showHint").checked = false;
     guess.placeholder = "";
 
     document.getElementById("name").disabled = false;
@@ -303,9 +303,7 @@ function triggerConfetti() {
         });
     }, 200);
 }
-
-
-    
+  
 
 function updateTimerDisplay(){
     const elapsedTime = Date.now() - startTime;
