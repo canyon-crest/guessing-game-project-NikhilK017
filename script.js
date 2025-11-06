@@ -60,7 +60,7 @@ function play() {
     }
 
     const finalSelectedLevel = document.querySelector('input[name="level"]:checked');
-    const label = document.querySelector(`label[for="${finalSelectedLevel.id}"]`);
+    const label = document.querySelector('label[for="' + finalSelectedLevel.id + '"]');
     if (label) {
         label.classList.add('current-level');
     }
