@@ -1,5 +1,6 @@
 // global variables
 let level, answer, score, playerName, startTime, timerInterval, gameTimes, currentDifficulty;
+const guess = document.getElementById("guess");
 const levelArr = document.getElementsByName("level");
 rating = document.getElementById("rating");
 
@@ -23,6 +24,14 @@ guess.addEventListener("keydown", function(event) {
 
         event.preventDefault();
         makeGuess();
+    }
+});
+
+document.getElementById("showHint").addEventListener("change", function() {
+    if (this.checked && !guess.disabled) {
+        guess.placeholder = "Answer: " + answer;
+    } else {
+        guess.placeholder = "";
     }
 });
 
@@ -111,7 +120,8 @@ function startGame(rawName) {
 
     msg.innerHTML = "Hello, <span class='player-name'>" + playerName + "</span>! Guess a number from 1 to " + level + ".";
     answer = Math.floor(Math.random() * level) + 1;
-    guess.placeholder = answer;
+
+    
 }
 
 
@@ -203,6 +213,7 @@ function reset(){
     rating.placeholder = "";
 
     guess.value = "";
+    document.getElementById("showHint").checked = false;
     guess.placeholder = "";
 
     document.getElementById("name").disabled = false;

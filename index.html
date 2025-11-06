@@ -11,25 +11,60 @@
     <p id="clock" class="clock"></p>
     <h1>Guessing Game</h1>
     <p>Welcome to the guessing game! Try to guess the right number (randomly generated) in the fewest amount of guesses! There are three levels to choose from. After each guess, you will know if your guess was hot, warm, or cold. Good luck!</p>
+
+    <p>You can hover over the difficulty levels to see how they're different.</p>
+
+
+    <p>You can hit <code>Enter</code> to submit your guess, and every time you hit you re-guess, the input box will be selected for you (so you can guess quicker).</p>
+
+
+    <p>For help understanding how the ratings and outputs work (or to cheat and guess faster), you can select <code>Show answer...</code></p>
     
 
     <h3>Name</h3>
     <input type="text" id="name" placeholder="Enter your name...">
 
     <h3>Level</h3>
-    
+    <span title="Easy difficulty - guess between 1 and 3">
     <input type="radio" name="level" id="e" value="3"><label for="e">Easy</label>
-    <input type="radio" name="level" id="m" value="10"><label for="m">Medium</label>
-    <input type="radio" name="level" id="h" value="100"><label for="h">Hard</label>
-    <input type="radio" name="level" id="r" value="random"><label for="r">Random</label>
+    </span>
+    
 
-    <button id="playBtn">Play</button>
+    <span title = "Medium difficulty - guess between 1 and 10">
+    <input type="radio" name="level" id="m" value="10"><label for="m">Medium</label>
+    </span>
+
+    <span title="Hard difficulty - guess between 1 and 100">
+    <input type="radio" name="level" id="h" value="100"><label for="h">Hard</label>
+    </span>
+
+
+    <span title="Randomly chooses easy, medium, or hard.">
+    <input type="radio" name="level" id="r" value="random"><label for="r">Random</label>
+    </span>
+
+    <span title = "Click to start playing">
+      <button id="playBtn">Play</button>
+    </span>
 
     <h3 id="msg">Select a Level</h3>
+
     <h3 id="rating"></h3>
+
     <input type="text" id="guess">
-    <button id="guessBtn" disabled>Guess</button>
-    <button id="giveUpBtn" disabled>Give Up</button>
+    
+    <button id="guessBtn" disabled title="Submit your guess" >Guess</button>
+    <button id="giveUpBtn" disabled title="Give up (ARE YOU SURE???)" >Give Up</button>
+
+    <br>
+    <br>
+
+    <div class = "hint">
+      <span title="Click to show what the answer is">
+        <input type="checkbox" id="showHint"> Show answer...
+      </span>
+    </div>
+
 
     <p id="timer"></p>
 
@@ -51,10 +86,11 @@
 
     <hr>
 
-    <h3>Youtube Video</h3>
-    <p>This youtube video shows how numbers are randomly* generated on computers</p>
+    <h3>Video</h3>
+    <p>This Youtube video shows how numbers are randomly* generated on computers.</p>
     <div class="video-container">
       <iframe src="https://www.youtube.com/embed/nBq4sFg3at0" title="How computers generate RANDOMNESS from math" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+      
     </div>
 
 
