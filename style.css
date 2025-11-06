@@ -104,7 +104,8 @@ label {
 }
 
 #rating {
-  color: #e06c75; 
+  /* color: #e06c75;  */
+  color: #d6d4d4;
 }
 
 #msg {
@@ -132,7 +133,7 @@ label {
 }
 
 .bad-score {
-  color:rgb(94, 12, 12);
+  color:rgb(177, 70, 70);
   font-weight: bold;
 }
 
