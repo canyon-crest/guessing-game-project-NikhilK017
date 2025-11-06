@@ -64,10 +64,17 @@ input[type="text"] {
 
 input[type="radio"] {
   margin-right: 5px;
+  cursor: pointer;
 }
+
+iframe {
+  cursor: wait;
+}
+
 
 label {
   margin-right: 15px;
+  cursor: pointer;
 }
 
 
@@ -127,9 +134,20 @@ label {
 }
 
 .clock {
-  font-weight:bold;
+
   margin-left:2%;
+  padding:15px;
+  width: fit-content;
+
+  font-weight:bold;
   font-size: x-large;
+
+  border:#1c1e22 solid;
+  border-radius:10px;
+
+  background-color:#363e4e;
+  
+
 }
 
 .video-container {
@@ -152,6 +170,6 @@ label {
 }
 
 .current-level {
-    color: #e5c07b; /* Gold color, same as timer */
+    color: #e5c07b;
     font-weight: bold;
 }
